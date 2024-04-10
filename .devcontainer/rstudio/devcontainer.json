@@ -3,9 +3,10 @@
 {
     "name": "OpenSAFELY RStudio",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    // "build": {
+    //     "dockerfile": "Dockerfile"
+    // },
+    "image": "ghcr.io/jongmassey/test-devcontainers:latest",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
