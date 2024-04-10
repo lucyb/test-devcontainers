@@ -4,6 +4,12 @@ FROM remlapmot/r-docker:2024-04-02-rstudio
 # docker clean up that deletes that cache on every apt install
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
+# install renv
+RUN --mount=type=cache,target=/cache,id=/cache-2004 R -e 'install.packages("renv", destdir="/cache"); renv::init(bare = TRUE)'
+
+# copy the renv directory from the OpenSAFELY R action image
+COPY --from=ghcr.io/opensafely-core/r /renv/ /renv/
+
 # ensure fully working base python3.10 installation using deadsnakes ppa
 RUN --mount=type=cache,target=/var/cache/apt \
     echo "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal main" > /etc/apt/sources.list.d/deadsnakes-ppa.list &&\
