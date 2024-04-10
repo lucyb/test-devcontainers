@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-    "name": "OpenSAFELY Python",
+    "name": "OpenSAFELY RStudio",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "build": {
         "dockerfile": "Dockerfile"
@@ -17,13 +17,22 @@
         }
     },
     "postCreateCommand": "pip3 install -r .devcontainer/requirements.in",
+    "postAttachCommand": {
+        "rstudio-start": "sudo rstudio-server start"
+    },
+    "forwardPorts": [
+        8787
+    ],
+    "portsAttributes": {
+        "8787": {
+            "label": "RStudio IDE"
+        }
+    },
     // Configure tool-specific properties.
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.python",
-                "ms-toolsai.jupyter",
-                "ms-toolsai.jupyter-renderers"
+                "ms-python.python"
             ]
         }
     },
