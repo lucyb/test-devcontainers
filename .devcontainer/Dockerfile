@@ -1,26 +1,12 @@
-FROM remlapmot/r-docker:2024-04-02-rstudio
+FROM ghcr.io/opensafely-core/python:v2
 
 # we are going to use an apt cache on the host, so disable the default debian
 # docker clean up that deletes that cache on every apt install
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
-# ensure fully working base python3.10 installation using deadsnakes ppa
+# setup the ehrql extension. This can't be installed via pip because it
+# requires Python >=3.11
 RUN --mount=type=cache,target=/var/cache/apt \
-    echo "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal main" > /etc/apt/sources.list.d/deadsnakes-ppa.list &&\
-    /usr/lib/apt/apt-helper download-file 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf23c5a6cf475977595c89f51ba6932366a755776' /etc/apt/trusted.gpg.d/deadsnakes.asc
-
-# Install python 3.10
-RUN --mount=type=cache,target=/var/cache/apt \
-    sudo apt update && sudo apt install -y curl python3.10 python3.10-distutils \
-    # Pip for Python 3.10 isn't included in deadsnakes, so install separately
-    && curl https://bootstrap.pypa.io/get-pip.py | python3.10
-
-# Create a local user and give it sudo (aka root) permissions
-#RUN useradd -ms /bin/bash opensafely && usermod -aG sudo opensafely
-RUN usermod -aG sudo rstudio
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# Required for installing opensafely cli
-ENV PATH="/home/rstudio/.local/bin:${PATH}"
-
-USER rstudio
+    apt update && apt install -y curl unzip &&\
+    curl -LJO https://github.com/opensafely-core/ehrql/archive/main.zip &&\
+    unzip ehrql-main.zip

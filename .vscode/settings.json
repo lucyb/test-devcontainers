@@ -1,4 +1,5 @@
 {
+    "python.analysis.extraPaths": ["/workspace/ehrql-main/"],
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
@@ -10,5 +11,5 @@
     "files.autoSaveDelay": 1000,
     "window.autoDetectColorScheme": true,
     "extensions.ignoreRecommendations": true,
-    "data.preview.theme": "light"  
+    "data.preview.theme": "light"
 }
