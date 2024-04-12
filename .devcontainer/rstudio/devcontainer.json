@@ -2,10 +2,6 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
     "name": "OpenSAFELY RStudio",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    // "build": {
-    //     "dockerfile": "Dockerfile"
-    // },
     "image": "ghcr.io/jongmassey/test-devcontainers:latest",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
@@ -17,7 +13,7 @@
             "dockerDashComposeVersion": "v2"
         }
     },
-    "postCreateCommand": "pip3 install -r .devcontainer/requirements.in",
+    "postCreateCommand": "/bin/bash .devcontainer/rstudio/postCreate.sh",
     "postAttachCommand": {
         "rstudio-start": "sudo rstudio-server start"
     },
