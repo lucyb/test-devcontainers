@@ -10,5 +10,7 @@
     "files.autoSaveDelay": 1000,
     "window.autoDetectColorScheme": true,
     "extensions.ignoreRecommendations": true,
-    "data.preview.theme": "light"  
+    "data.preview.theme": "light",
+    "python.analysis.extraPaths": [".devcontainers/ehrql-main/"],
+    "python.defaultInterpreterPath": "/usr/bin/python3.10"
 }
