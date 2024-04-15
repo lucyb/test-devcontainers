@@ -1,8 +1,14 @@
-FROM remlapmot/r-docker:2024-04-02-rstudio
+FROM remlapmot/r-docker:2024-04-02-rstudio-renv-1-0-5
 
 # we are going to use an apt cache on the host, so disable the default debian
 # docker clean up that deletes that cache on every apt install
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
+
+# copy the renv directory from the OpenSAFELY R action image and active it by
+# default
+RUN R -e 'renv::init(bare = TRUE)'
+COPY --from=ghcr.io/opensafely-core/r /renv/ /renv/
+RUN echo 'source("/renv/renv/activate.R")' >> /etc/R/Rprofile.site
 
 # ensure fully working base python3.11 installation using deadsnakes ppa
 RUN --mount=type=cache,target=/var/cache/apt \
